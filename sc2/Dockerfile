@@ -5,7 +5,8 @@ FROM ubuntu
 RUN apt-get update
 RUN apt-get -y install r-base
 RUN apt-get -y install aptitude libcurl4-openssl-dev  libxml2-dev libxml2-dev
-
+RUN echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
+RUN Rscript -e "install.packages('glmnet')"
 
 ## Make sure all files that your execution scripts need are in the Docker image
 
