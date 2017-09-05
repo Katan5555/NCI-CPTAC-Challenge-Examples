@@ -23,7 +23,7 @@ for(i in 1:length(model)) {
 }
 rownames(prediction) <- names(model)
 
-# prediction[which(apply(prediction, 1, var) == 0),  ] <- features[names(which(apply(prediction, 1, var) == 0)), ]
+prediction[which(apply(prediction, 1, var) == 0),  ] <- features[ , 1:length(which(apply(prediction, 1, var) == 0)) ]
 prediction <- cbind(proteinID = rownames(prediction),prediction)
 
 # save the prediction matrix
