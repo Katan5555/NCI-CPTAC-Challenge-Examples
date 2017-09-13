@@ -1,36 +1,33 @@
-# -- Dry Run SubChallenge 3
+path <- "/"
 
+# load package and functions
 library(randomForest)
+predictRF <- function(model,newx) {
+  return(predict(model,newdata=newx,type="response"))
+}
 
-## loading data
-name_of_response = 'HGSC_pho'  
-name_of_features = 'HGSC_prot'  
+# load saved models
+load(paste0(path,"model_storage/Model_ALL.rda"))
 
-## loading data
-RES = read.table(paste(path,'/training_data/',name_of_response,sep=""), sep=",",header=TRUE)
-features = read.table(paste(path,'/training_data/',name_of_features,sep=""), sep=",",header=TRUE) 
+# load testing data, to check data name go to this page: https://www.synapse.org/#!Synapse:syn8228304/wiki/448379
+features  <- read.csv(paste0(path,"evaluation_data/prospective_ova_pro.txt"), row.names= 1, sep="\t", check.names = F )
 
-## choose a subset of 5 phosphosite
-RES = RES[,seq(1,5)] 
+# select features used in trained model
+features<-features[match(protein.subset,rownames(features)), ]
+rownames(features) <- NULL
 
-prediction_result = list()  ## store result of each run, for all proteins
-out<-list()
+prediction <- c()
+for(i in 1:length(out.new)) {
+  fit <- out.new[[i]]
+  test_pred <- predictRF(fit, t(features) )
+  prediction <- rbind(prediction, test_pred)
+}
+rownames(prediction) <- phosphoID
 
-for (j in 1:dim(RES)[2]) out[[j]]<-randomForest(x=t(features),y=RES[,j],nTree=1000)
+# prediction[which(apply(prediction, 1, var) == 0),  ] <- features[ , 1:length(which(apply(prediction, 1, var) == 0)) ]
+prediction <- cbind(phosphoID = phosphoID, prediction)
 
-
-# --- prediction step example
-j=1
-features.test<-features[seq(1,10),]
-predict(out[[j]], t(features.test), type="response")$test$predicted
-
-############################## save result ##############################
-save(out,path + 'output/Challente3_prediction.rda')
-
-
-
-
-
-
-
-
+# save the prediction matrix
+write.table(prediction, file = paste0(path,"output/predictions.tsv"), sep="\t",row.names=F )
+# save the confidence matrix 
+write.table(prediction, file = paste0(path,"output/confidence.tsv"), sep="\t" ,row.names=F)
