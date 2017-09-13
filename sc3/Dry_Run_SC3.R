@@ -10,7 +10,7 @@ predictRF <- function(model,newx) {
 load(paste0(path,"model_storage/Model_ALL.rda"))
 
 # load testing data, to check data name go to this page: https://www.synapse.org/#!Synapse:syn8228304/wiki/448379
-features  <- read.csv(paste0(path,"evaluation_data/prospective_ova_pro.txt"), row.names= 1, sep="\t", check.names = F )
+features  <- read.csv(paste0(path,"evaluation_data/prospective_ova_proteome_sort_common_gene_7061.txt"), row.names= 1, sep="\t", check.names = F )
 
 # select features used in trained model
 features<-features[match(protein.subset,rownames(features)), ]
