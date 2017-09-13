@@ -12,7 +12,7 @@ predictEN <- function(model, lambda, feat) {
 load(paste0(path,"model_storage/SAVE_MODEL_ElasticNet_HGSC_ALL_PROT_microarray_fold5_ite10.Rdata"))
 
 # load testing data
-HGSC_rna_EVAL  <- read.csv(paste0(path,"evaluation_data/prospective_ova_rna_seq_sort_common_gene_15632.txt"), row.names= 1, sep="\t", check.names = F )
+HGSC_rna_EVAL  <- read.csv(paste0(path,"evaluation_data/prospective_ova_rna_seq_sort_common_gene_15121.txt"), row.names= 1, sep="\t", check.names = F )
 features <- t(HGSC_rna_EVAL)
 
 prediction <- c()
