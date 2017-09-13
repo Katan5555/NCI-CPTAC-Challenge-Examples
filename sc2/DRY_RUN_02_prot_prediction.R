@@ -23,12 +23,12 @@ for(i in 1:length(model)) {
 }
 rownames(prediction) <- names(model)
 
-# prediction[which(apply(prediction, 1, var) == 0),  ] <- features[names(which(apply(prediction, 1, var) == 0)), ]
+prediction[which(apply(prediction, 1, var) == 0),  ] <- features[names(which(apply(prediction, 1, var) == 0)), ]
 prediction <- cbind(proteinID = rownames(prediction),prediction)
 
 # save the prediction matrix
-write.table(prediction, file = paste0(path,"output/predictions.tsv"), sep="\t" )
+write.table(prediction, file = paste0(path,"output/predictions.tsv"), sep="\t",row.names=F )
 
 # save the confidence matrix 
-write.table(prediction, file = paste0(path,"output/confidence.tsv"), sep="\t" )
+write.table(prediction, file = paste0(path,"output/confidence.tsv"), sep="\t",row.names=F )
 
