@@ -22,9 +22,8 @@ for(i in 1:length(out.new)) {
   test_pred <- predictRF(fit, t(features) )
   prediction <- rbind(prediction, test_pred)
 }
-rownames(prediction) <- phosphoID
 
-# prediction[which(apply(prediction, 1, var) == 0),  ] <- features[ , 1:length(which(apply(prediction, 1, var) == 0)) ]
+# ensure the format is correct
 prediction <- cbind(phosphoID = phosphoID, prediction)
 
 # save the prediction matrix
