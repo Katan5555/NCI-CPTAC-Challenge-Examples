@@ -22,9 +22,6 @@ for(i in 1:length(model)) {
   prediction <- rbind(prediction, test_pred)
 }
 
-# some predictions were all zeros, so I used some mRNA data to replace the non valid predictions.
-prediction[which(apply(prediction, 1, var) == 0),  ] <- features[ , 1:length(which(apply(prediction, 1, var) == 0)) ]
-
 # ensure the format is correct
 prediction <- cbind(proteinID = rownames(prediction),prediction)
 
