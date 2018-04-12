@@ -1,2 +1,2 @@
 #!/bin/sh
-python DRY_RUN_02_prot_prediction.py
+Rscript Dry_Run_SC2.R
